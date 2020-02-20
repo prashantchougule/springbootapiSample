@@ -23,8 +23,9 @@ public class PersonAccessDataService implements PersonDao{
 
 	@Override
 	public int insertPerson(UUID id, Person person) {
-		final String sql = "INSERT INTO person(id, name) values(?, ?)";
-		jdbcTemplate.execute(sql,);
+		final String sql = "INSERT INTO person(id, name) VALUES (?, ?)";
+		Object[] params = new Object[] { id, person.getName() };
+		jdbcTemplate.update(sql,params);
 		return 0;
 	}
 
@@ -42,14 +43,17 @@ public class PersonAccessDataService implements PersonDao{
 
 	@Override
 	public int deletePersonByID(UUID id) {
-		// TODO Auto-generated method stub
-		return 0;
+		final String sql = "DELETE FROM person WHERE id = ?";
+		Object[] params = new Object[] { id };
+		return jdbcTemplate.update(sql,params);
+
 	}
 
 	@Override
 	public int updatePersonById(UUID id, Person person) {
-		// TODO Auto-generated method stub
-		return 0;
+		final String sql = "UPDATE person SET name = ? WHERE id = ?";
+		Object[] params = new Object[] { person.getName(), id };
+		return jdbcTemplate.update(sql,params);
 	}
 
 	@Override
